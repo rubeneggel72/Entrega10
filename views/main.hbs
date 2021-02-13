@@ -1,0 +1,35 @@
+
+{{>head}} 
+{{#if productos}} 
+
+    {{#each productos}}
+        <div class="row border-bottom border-dark">
+            <div class="col-1  my-auto">
+                <h6> {{this.id}}</h6>
+            </div>
+            <div class="col-3 my-4 ">
+                <img class="img-productos" src={{this.thumbnail}} alt={{this.title}} width="30%" >
+            </div>
+            <div class="col-5  my-auto">
+                <h6> {{this.title}}</h6>
+            </div>
+             <div class="col-2 my-auto" >
+                <h6>$ {{this.price}}</h6>
+            </div>
+        </div>
+    {{/each}}
+  </ul>
+ {{else}}
+ <div class="row border-bottom border-dark">
+            <div class="col-12  my-auto">
+                <br>
+                <br>
+                <br>
+                <h4>No hay Productos</h4>
+                <br>
+                <br>
+                <br>
+            </div>
+             </div>
+  {{/if}}
+{{>foot}} 
