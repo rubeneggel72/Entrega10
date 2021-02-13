@@ -1,11 +1,10 @@
 const express = require('express')
 const router = express.Router();
-let matrizProductos = [{"id":1,"title":"iPhone 11 64 GB (Product)Red","price":159000,"thumbnail":"https://raw.githubusercontent.com/rubeneggel72/Entrega09/main/img/img-001.jpg"},
-{"id":3,"title":"iPhone 12 64 GB azul","price":200000,"thumbnail":"https://raw.githubusercontent.com/rubeneggel72/Entrega09/main/img/img-002.jpg"},
-{"id":4,"title":"iPhone XR 64 GB negro","price":139000,"thumbnail":"https://raw.githubusercontent.com/rubeneggel72/Entrega09/main/img/img-003.jpg"},
-{"id":5,"title":"iPhone XR 64 GB negro","price":139000,"thumbnail":"https://raw.githubusercontent.com/rubeneggel72/Entrega09/main/img/img-004.jpg"},
-{"title":"LG K50S 32 GB aurora black 3 GB RAM","price":22900,"thumbnail":"https://raw.githubusercontent.com/rubeneggel72/Entrega09/main/img/img-005.jpg"},
-{"title":"Moto E6s (2020) Special Edition 64 GB gravity gradient 4 GB RAM","price":21000,"thumbnail":"https://raw.githubusercontent.com/rubeneggel72/Entrega09/main/img/img-006.jpg"}]
+let matrizProductos = [{"id":1,"title":"iPhone 11 64 GB (Product)Red","price":159000,"thumbnail":"https://raw.githubusercontent.com/rubeneggel72/Entrega10/main/img/img-001.jpg"},
+{"id":3,"title":"iPhone 12 64 GB azul","price":200000,"thumbnail":"https://raw.githubusercontent.com/rubeneggel72/Entrega10/main/img/img-002.jpg"},
+{"id":4,"title":"iPhone XR 64 GB negro","price":139000,"thumbnail":"https://raw.githubusercontent.com/rubeneggel72/Entrega10/main/img/img-003.jpg"},
+{"id":5,"title":"iPhone XR 64 GB negro","price":139000,"thumbnail":"https://raw.githubusercontent.com/rubeneggel72/Entrega10/main/img/img-004.jpg"},
+]
 
 router.get('/productos/vista', (req, res) => {
     console.log(matrizProductos)
@@ -22,7 +21,9 @@ router.get('/productos', (req, res) => {
 })
 
 router.get('/productos/:id', (req, res) => {
-    let producto = matrizProductos[parseInt(req.params.id) - 1]
+    let id = parseInt(req.params.id)
+    let idx = getIndice(id)
+    let producto = matrizProductos[idx]
     if (producto != undefined) {
         res.send(producto);
         return
@@ -43,7 +44,7 @@ router.post('/productos', (req, res) => {
     res.send(req.body);
 })
 
-router.put('/productos/actualizar/:id', (req, res) => {
+router.put('/productos/:id', (req, res) => {
     let id = parseInt(req.params.id)
     let idx = getIndice(id)
     let producto = matrizProductos[idx]
@@ -57,12 +58,13 @@ router.put('/productos/actualizar/:id', (req, res) => {
     }
 })
 
-router.delete('/productos/delete/:id', (req, res) => {
+router.delete('/productos/:id', (req, res) => {
     let id = parseInt(req.params.id)
     let idx = getIndice(id)
     let producto = matrizProductos[idx]
-    matrizProductos.splice(getIndice(idx + 1), 1);
+    
     if (producto != undefined) {
+        matrizProductos.splice(idx, 1);
         res.send(producto);
         return
     }
@@ -77,13 +79,13 @@ router.delete('/productos/delete/:id', (req, res) => {
 
 
 function getIndice(id) {
-    var Indice = -1;
+    var indice = -1;
     matrizProductos.filter(function (producto, i) {
         if (producto.id === id) {
-            Indice = i;
+            indice = i;
         }
     });
-    return Indice;
+    return indice;
 }
 
 module.exports = router
